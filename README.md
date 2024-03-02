@@ -1,4 +1,4 @@
-# OpenBaseNET para SQL Server
+# OpenBaseNET para Postgresql
 ![GitHub repo size](https://img.shields.io/github/repo-size/britors/OpenBaseNETPostgres)
 ![GitHub top language](https://img.shields.io/github/languages/top/britors/OpenBaseNETPostgres)
 ![GitHub language count](https://img.shields.io/github/languages/count/britors/OpenBaseNETPostgres)
