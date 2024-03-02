@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenBaseNET.Domain\OpenBaseNET.Domain.csproj" />
+    <ProjectReference Include="..\OpenBaseNET.Infra.Settings\OpenBaseNET.Infra.Settings.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase Scripts\" />
+  </ItemGroup>
+
+</Project>
