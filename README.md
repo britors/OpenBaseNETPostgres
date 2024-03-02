@@ -1,13 +1,13 @@
 # OpenBaseNET para SQL Server
 ![GitHub repo size](https://img.shields.io/github/repo-size/britors/OpenBaseNETPostgres)
-![GitHub top language](https://img.shields.io/github/languages/top/britors/OpenBaseNETOracle)
-![GitHub language count](https://img.shields.io/github/languages/count/britors/OpenBaseNETOracle)
-![GitHub last commit](https://img.shields.io/github/last-commit/britors/OpenBaseNETOracle)
-![GitHub issues](https://img.shields.io/github/issues/britors/OpenBaseNETOracle)
-![GitHub](https://img.shields.io/github/license/britors/OpenBaseNETOracle)
-![GitHub forks](https://img.shields.io/github/forks/britors/OpenBaseNETOracle?style=social)
-![GitHub Repo stars](https://img.shields.io/github/stars/britors/OpenBaseNETOracle?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/britors/OpenBaseNETOracle?style=social)
+![GitHub top language](https://img.shields.io/github/languages/top/britors/OpenBaseNETPostgres)
+![GitHub language count](https://img.shields.io/github/languages/count/britors/OpenBaseNETPostgres)
+![GitHub last commit](https://img.shields.io/github/last-commit/britors/OpenBaseNETPostgres)
+![GitHub issues](https://img.shields.io/github/issues/britors/OpenBaseNETPostgres)
+![GitHub](https://img.shields.io/github/license/britors/OpenBaseNETPostgres)
+![GitHub forks](https://img.shields.io/github/forks/britors/OpenBaseNETPostgres?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/britors/OpenBaseNETPostgres?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/britors/OpenBaseNETPostgres?style=social)
 ![GitHub followers](https://img.shields.io/github/followers/britors?style=social)
 
 
