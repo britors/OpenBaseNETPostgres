@@ -19,7 +19,6 @@ internal static class PostgresExceptionPredicate
                 ConnectionDoesNotExist or // Connection Does Not Exist
                 ConnectionFailure or // Connection Failure
                 SQLClientUnableToEstablishConnection or // SQL Client Unable to Establish Connection
-                SQLServerRejectedEstablishmentOfSQLConnection or // SQL Server Rejected Establishment of SQL Connection
                 TransactionResolutionUnknown or // Transaction Resolution Unknown
                 ConnectionNameInUse or // Connection Name in Use
                 InvalidConnectionName or // Invalid Connection Name
@@ -28,10 +27,6 @@ internal static class PostgresExceptionPredicate
                 SQLServerConnectionLimitExceeded or // SQL Server Connection Limit Exceeded
                 ProtocolViolation or // Protocol Violation
                 CannotConnectNow or // Cannot Connect Now
-                SQLServerConnectionRejectedEstablishmentOfSQLConnection or // SQL Server Connection Rejected Establishment of SQL Connection
-                SQLServerConnectionRejectedEstablishmentOfSQLConnectionException or // SQL Server Connection Rejected Establishment of SQL Connection Exception
-                SQLServerConnectionRejectedEstablishmentOfSQLConnectionAdministration or // SQL Server Connection Rejected Establishment of SQL Connection Administration
-                SQLServerConnectionRejectedEstablishmentOfSQLConnectionSecurity or // SQL Server Connection Rejected Establishment of SQL Connection Security
                 SQLServerConnectionRejectedEstablishmentOfSQLConnectionTransaction or // SQL Server Connection Rejected Establishment of SQL Connection Transaction
                 DeprecatedFeature or // Deprecated Feature
                 SQLRoutineException or // SQL Routine Exception
@@ -165,7 +160,6 @@ internal static class PostgresExceptionPredicate
     private const string ConnectionDoesNotExist = "08003";
     private const string ConnectionFailure = "08006";
     private const string SQLClientUnableToEstablishConnection = "08001";
-    private const string SQLServerRejectedEstablishmentOfSQLConnection = "08004";
     private const string TransactionResolutionUnknown = "08007";
     private const string ConnectionNameInUse = "08002";
     private const string InvalidConnectionName = "08014";
@@ -174,10 +168,6 @@ internal static class PostgresExceptionPredicate
     private const string SQLServerConnectionLimitExceeded = "08001";
     private const string ProtocolViolation = "08P01";
     private const string CannotConnectNow = "57P03";
-    private const string SQLServerConnectionRejectedEstablishmentOfSQLConnection = "08004";
-    private const string SQLServerConnectionRejectedEstablishmentOfSQLConnectionException = "08004";
-    private const string SQLServerConnectionRejectedEstablishmentOfSQLConnectionAdministration = "08004";
-    private const string SQLServerConnectionRejectedEstablishmentOfSQLConnectionSecurity = "08004";
     private const string SQLServerConnectionRejectedEstablishmentOfSQLConnectionTransaction = "08004";
     private const string DeprecatedFeature = "01P01";
     private const string SQLRoutineException = "2F002";

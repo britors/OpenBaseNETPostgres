@@ -14,19 +14,32 @@ public sealed class LoggingBehaviour<TRequest, TResponse>(ILogger<LoggingBehavio
         var requestName = typeof(TRequest).Name;
         try
         {
-            
-            logger.LogInformation($"Chamando o comando {requestName} com valores {JsonSerializer.Serialize(request)}");
+
+            logger.LogInformation(
+                    "Chamando o comando {RequestName} com valores {Values}",
+                    requestName,
+                    JsonSerializer.Serialize(request)
+                );
+
             var response = await next();
-            logger.LogInformation($"Resposta para  o comando {requestName} foi {JsonSerializer.Serialize(response)}");
+
+            logger.LogInformation(
+                    "Resposta para  o comando {RequestName} foi {Values}",
+                    requestName,
+                    JsonSerializer.Serialize(response)
+                );
+
             return response;
         }
-        catch(Exception e)
+        catch (Exception exception)
         {
-            logger.LogError($"Ocorreu um erro ao chamar o comando {requestName}:  {e.Message}");
-            logger.LogError($"StackTrace: {e.StackTrace}");
-#pragma warning disable CS8603 // Possible null reference return.
-            return default;
-#pragma warning restore CS8603 // Possible null reference return.
+            logger.LogError(
+                    exception,
+                    "Ocorreu um erro ao chamar o comando{RequestName}",
+                    requestName
+                );
+
+            return await next();
         }
     }
 }

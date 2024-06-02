@@ -16,8 +16,4 @@
     <ProjectReference Include="..\OpenBaseNET.Infra.Settings\OpenBaseNET.Infra.Settings.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataBase Scripts\" />
-  </ItemGroup>
-
 </Project>
