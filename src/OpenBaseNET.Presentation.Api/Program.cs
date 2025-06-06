@@ -2,8 +2,6 @@ using OpenBaseNET.Infra.CrossCutting;
 using OpenBaseNET.Presentation.Api;
 using System.Reflection;
 
-var ascii = Figgle.FiggleFonts.Standard.Render("OpenBaseNET");
-Console.WriteLine(ascii);
 Console.WriteLine("Starting application...");
 Console.WriteLine("Postgresql Flavor...");
 Console.WriteLine($"Version {Assembly.GetEntryAssembly()?.GetName().Version}");
