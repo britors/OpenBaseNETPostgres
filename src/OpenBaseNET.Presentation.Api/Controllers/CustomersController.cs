@@ -16,7 +16,8 @@ public class CustomersController(ICustomerApplicationService customerApplication
     {
         try
         {
-            var result = await customerApplicationService.GetByIdAsync(new FindCustomerByIdRequest(id), cancellationToken);
+            var result = await customerApplicationService
+                .GetByIdAsync(new FindCustomerByIdRequest(id), cancellationToken);
             return Ok(result);
         }
         catch (ValidationException ex)
