@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>10.0.0</Version>
+    <PackageType>Template</PackageType>
+    <Title>OpenBaseNET Postgres Template</Title>
+    <Description>A .NET 10 project template for quickly creating robust Web APIs using Clean Architecture, Repository Pattern, and Postgres. Get a production-ready solution in seconds.</Description>
+    <PackageTags>dotnet;template;clean-architecture;repository-pattern;postgres;api;webapi;dotnet-template</PackageTags>
+    <TargetFramework>net10.0</TargetFramework>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>w3ti.OpenBaseNET.Postgres.Template</PackageId>
+    <Authors>w3ti</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl> https://github.com/britors/OpenBaseNETPostgres </PackageProjectUrl>
+    <PackageReleaseNotes>
+    - Atualização de pacotes nuget
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content
+      Include="**\*"
+      Exclude=" **\bin\**;
+                **\obj\**;
+                **\.vs\**;
+                **\.git\**;
+                Template.csproj;
+                *.nupkg;
+                **\.github\**;
+                **\.idea\**;
+                **\.vscode\**;
+                README.md;
+                icon.png;
+                OpenBaseNETPostgres.sln.DotSettings.user;
+                LICENSE.txt;"
+    />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+ <ItemGroup>
+    <Content Include=".gitattributes" Pack="true" PackagePath="." />
+    <Content Include=".gitignore" Pack="true" PackagePath="." />
+  </ItemGroup>
+</Project>
