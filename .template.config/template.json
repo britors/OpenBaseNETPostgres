@@ -6,10 +6,10 @@
     "API",
     "Solution"
   ],
-  "identity": "OpenBaseNET.SQLServer.Template",
-  "name": "OpenBaseNET SQLServer Template",
-  "shortName": "openbasenet-sql",
-  "sourceName": "OpenBaseNETSQLServer",
+  "identity": "OpenBaseNET.PostgreSQL.Template",
+  "name": "OpenBaseNET PostgreSQL Template",
+  "shortName": "openbasenet-pgsql",
+  "sourceName": "OpenBaseNETPostgres",
   "tags": {
     "language": "C#",
     "type": "project"
