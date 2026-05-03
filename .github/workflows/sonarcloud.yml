@@ -46,6 +46,7 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
         shell: powershell
         run: |
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"britors_OpenBaseNETPostgres" /o:"britors" /d:sonar.token="$env:SONAR_TOKEN"
