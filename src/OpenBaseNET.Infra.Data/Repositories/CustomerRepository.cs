@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Extensions.Logging;
 using OpenBaseNET.Domain.Entities;
 using OpenBaseNET.Domain.Interfaces.Repositories;
 using OpenBaseNET.Domain.QueryResults;
@@ -10,9 +9,8 @@ namespace OpenBaseNET.Infra.Data.Repositories;
 
 public sealed class CustomerRepository(
     DbSession dbSession,
-    ILogger<RepositoryBase<Customer>> logger,
     OneBaseDataBaseContext context)
-    : RepositoryBase<Customer>(dbSession, logger, context), ICustomerRepository, IDataRepository
+    : RepositoryBase<Customer>(dbSession, context), ICustomerRepository, IDataRepository
 {
     public async Task<IEnumerable<CustomerQueryResult>> FindByNameAsync(
         string name,

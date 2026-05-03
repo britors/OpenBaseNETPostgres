@@ -7,6 +7,13 @@ namespace OpenBaseNET.Presentation.Api.Middlewares;
 
 public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
 {
+
+    private static readonly JsonSerializerOptions SWriteOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true
+    };
+    
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -23,6 +30,7 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
     {
         logger.LogError(exception, "Exceção não tratada: {Message}", exception.Message);
 
+        
         var (statusCode, title, detail) = exception switch
         {
             ValidationException validationEx => (
@@ -60,9 +68,8 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
 
         context.Response.ContentType = "application/problem+json";
         context.Response.StatusCode = (int)statusCode;
-
+        
         await context.Response.WriteAsync(
-            JsonSerializer.Serialize(problemDetails,
-                new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            JsonSerializer.Serialize(problemDetails, SWriteOptions));
     }
 }
