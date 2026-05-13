@@ -3,90 +3,89 @@
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-> OpenBaseNET para PostgreSQL é um template para projetos .NET 10 usando base de dados PostgreSQL.
+> OpenBaseNET for PostgreSQL is a template for .NET 10 projects using a PostgreSQL database.
 
-O template foi construído devido a necessidade de criar projetos de forma rápida e prática.
-Um template de projeto .NET para acelerar o desenvolvimento de APIs, já configurado com Arquitetura Limpa, Entity Framework Core e PostgreSQL.
+The template was built to address the need to create projects quickly and efficiently.
+A .NET project template to accelerate API development, pre-configured with Clean Architecture, Entity Framework Core, and PostgreSQL.
 
-## Sobre o Projeto
+## About the Project
 
-Iniciar um novo projeto exige muita configuração repetitiva: estruturar as pastas, definir as camadas da aplicação, configurar o acesso a dados, etc.
+Starting a new project requires a lot of repetitive configuration: structuring folders, defining application layers, setting up data access, etc.
 
-Este template foi criado para eliminar essa etapa inicial. Com um único comando, você terá uma solução .NET completa e robusta, pronta para você focar no que realmente importa: as regras de negócio da sua aplicação.
+This template was created to eliminate that initial setup step. With a single command, you'll have a complete and robust .NET solution, ready for you to focus on what really matters: your application's business rules.
 
-## 🏛️ Estrutura da Arquitetura
+## 🏛️ Architecture Structure
 
-O template utiliza os princípios da Clean Architecture para separar as responsabilidades de forma clara, garantindo um código organizado, testável e de fácil manutenção.
+The template uses Clean Architecture principles to clearly separate responsibilities, ensuring organized, testable, and maintainable code.
 
-* **MinhaNovaApi.Domain:** A camada mais interna e o coração da aplicação. Contém as entidades de negócio, enums e as interfaces dos repositórios. Não depende de nenhuma outra camada.
+* **MinhaNovaApi.Domain:** The innermost layer and the heart of the application. Contains business entities, enums, and repository interfaces. It does not depend on any other layer.
 
-* **MinhaNovaApi.Application:** Contém a lógica de negócio e os casos de uso (também conhecidos como "interactors"). Orquestra o fluxo de dados entre a apresentação e a infraestrutura, mas não conhece os detalhes de implementação de nenhum deles.
+* **MinhaNovaApi.Application:** Contains the business logic and use cases (also known as "interactors"). Orchestrates the data flow between the presentation and infrastructure layers, but has no knowledge of their implementation details.
 
-* **MinhaNovaApi.Infrastructure:** Implementa as abstrações definidas nas camadas internas. É aqui que reside o `DbContext` do Entity Framework, a implementação concreta dos repositórios e a integração com quaisquer outros serviços externos (como gateways de pagamento, envio de e-mails, etc.).
+* **MinhaNovaApi.Infrastructure:** Implements the abstractions defined in the inner layers. This is where the Entity Framework `DbContext` lives, along with the concrete repository implementations and integrations with any external services (such as payment gateways, email sending, etc.).
 
-* **MinhaNovaApi.API (Presentation):** A camada de entrada e saída. Contém os Controllers da API, DTOs (Data Transfer Objects) e a configuração da inicialização do serviço (`Program.cs`). É a única camada que o usuário final "vê".
+* **MinhaNovaApi.API (Presentation):** The input/output layer. Contains API Controllers, DTOs (Data Transfer Objects), and the service startup configuration (`Program.cs`). It is the only layer the end user "sees."
 
-### Tecnologias Principais
+### Main Technologies
 
 * **.NET 10**
 * **Entity Framework Core 10**
 * **Npgsql - PostgreSQL provider for .NET**
-* **Arquitetura Limpa (Clean Architecture)**
-* **Padrão de Repositório (Repository Pattern)**
-* **Pronto para PostgreSQL**
+* **Clean Architecture**
+* **Repository Pattern**
+* **PostgreSQL-ready**
 
 ---
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-Para criar um novo projeto a partir deste template, siga os passos abaixo.
+To create a new project from this template, follow the steps below.
 
-### Pré-requisitos
+### Prerequisites
 
-* [.NET SDK](https://dotnet.microsoft.com/download) (versão 10.0 ou superior).
-* [PostgreSQL](https://www.postgresql.org/download/) instalado e configurado.
+* [.NET SDK](https://dotnet.microsoft.com/download) (version 10.0 or higher).
+* [PostgreSQL](https://www.postgresql.org/download/) installed and configured.
 
-### 1. Configuração do Banco de Dados
+### 1. Database Configuration
 
-Configure sua connection string no arquivo `appsettings.json` ou `appsettings.Development.json`:
+Configure your connection string in the `appsettings.json` or `appsettings.Development.json` file:
 
 ```json
 {
   "ConnectionStrings": {
-    "OpenBasePostgres": "Host=localhost;Port=5432;Database=OpenBaseNet;Username=postgres;Password=sua_senha"
+    "OpenBasePostgres": "Host=localhost;Port=5432;Database=OpenBaseNet;Username=postgres;Password=your_password"
   }
 }
 ```
 
-### 2. Rodando o Projeto
+### 2. Running the Project
 
-Rode o projeto e a API estará pronta para uso.
+Run the project and the API will be ready to use.
 
 ```bash
 dotnet run --project src/OpenBaseNET.Presentation.Api/OpenBaseNET.Presentation.Api.csproj 
 ```
 
-### 3. Modelo a ser seguido
+### 3. Sample Model
 
-O Projeto vem com uma classe que mapeia uma entidade chamada cliente.
-Não é necessário para rodar seu projeto, serve apenas como Guia e pode ser excluído sem problemas.
+The project comes with a class that maps an entity called Customer.
+It is not required to run your project — it serves only as a guide and can be deleted without any issues.
 
-## 📦 Pacotes Principais
+## 📦 Main Packages
 
 - **Npgsql** - PostgreSQL data provider for .NET
 - **Npgsql.EntityFrameworkCore.PostgreSQL** - Entity Framework Core provider for PostgreSQL
-- **Entity Framework Core** - ORM para acesso a dados
-- **Dapper** - Micro ORM para consultas performáticas
-- **MediatR** - Implementação do padrão Mediator
-- **AutoMapper** - Mapeamento objeto-objeto
-- **Serilog** - Logging estruturado
-- **Polly** - Biblioteca de resiliência e tratamento de falhas transientes
+- **Entity Framework Core** - ORM for data access
+- **Dapper** - Micro ORM for high-performance queries
+- **MediatR** - Mediator pattern implementation
+- **AutoMapper** - Object-to-object mapping
+- **Serilog** - Structured logging
+- **Polly** - Resilience and transient fault handling library
 
-## Agradecimentos
+## Acknowledgments
 
-Grato a você que se interessou pelo projeto.
+Thank you for your interest in this project.
 
-### Feedbacks são sempre bem vindos
+### Feedback is always welcome
 
 Rodrigo S. Brito <rodrigo@w3ti.com.br>
-
