@@ -20,7 +20,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
 
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseMiddleware<ControllerMiddleware>();
@@ -31,3 +30,5 @@ app.MapControllers();
 
 
 await app.RunAsync();
+
+public partial class Program;

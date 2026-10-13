@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace OpenBaseNET.Domain.Interfaces.Services;
 
@@ -12,6 +12,7 @@ public interface IDomainService<TEntity, in TKeyType> where TEntity : class
             Expression<Func<TEntity, bool>>? predicate = null,
             int? pageNumber = null,
             int? pageSize = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
     Task<TEntity?> AddAsync(TEntity obj, CancellationToken cancellationToken);

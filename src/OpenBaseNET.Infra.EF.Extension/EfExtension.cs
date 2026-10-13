@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OpenBaseNET.Infra.Resilience.Database.Pgsql.Pipelines;
 using System.Linq.Expressions;
 
@@ -11,7 +11,7 @@ public static class EfExtension
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(async token =>
+        return await ExecuteAsync(context, async token =>
                 await context.SaveChangesAsync(token),
             cancellationToken);
     }
@@ -24,7 +24,7 @@ public static class EfExtension
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
+        return await ExecuteAsync(context, 
             async token =>
             {
                 if (id is null) return null;
@@ -39,11 +39,18 @@ public static class EfExtension
         Expression<Func<TEntity, bool>>? predicate = null,
         int? pageNumber = null,
         int? pageSize = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         params Expression<Func<TEntity, object>>[] includes) where TEntity : class
     {
         ArgumentNullException.ThrowIfNull(context);
+        if (pageNumber.HasValue != pageSize.HasValue)
+            throw new ArgumentException("Specify both pageNumber and pageSize.");
+        if (pageNumber is <= 0) throw new ArgumentOutOfRangeException(nameof(pageNumber));
+        if (pageSize is <= 0) throw new ArgumentOutOfRangeException(nameof(pageSize));
+        if (pageNumber.HasValue && orderBy is null)
+            throw new ArgumentException("Pagination requires a unique, deterministic ordering.", nameof(orderBy));
 
-        return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
+        return await ExecuteAsync(context, 
             async token =>
             {
                 var query = context
@@ -60,8 +67,11 @@ public static class EfExtension
                 if (predicate is not null)
                     query = query.Where(predicate);
 
+                if (orderBy is not null)
+                    query = orderBy(query);
+
                 if (pageNumber is not null && pageSize is not null)
-                    query = query.Skip((pageNumber.Value - 1) * pageSize.Value).Take(pageSize.Value);
+                    query = query.Skip(checked((pageNumber.Value - 1) * pageSize.Value)).Take(pageSize.Value);
 
                 return await query.ToListAsync(token);
             },
@@ -75,7 +85,7 @@ public static class EfExtension
     {
         ArgumentNullException.ThrowIfNull(context);
         
-        return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
+        return await ExecuteAsync(context, 
             async token =>
             {
                 var query = context.Set<TEntity>().AsQueryable();
@@ -86,5 +96,13 @@ public static class EfExtension
                 return await query.CountAsync(token);
             },
             cancellationToken);
+    }
+    private static async Task<TResult> ExecuteAsync<TResult>(DbContext context,
+        Func<CancellationToken, Task<TResult>> operation, CancellationToken cancellationToken)
+    {
+        if (context.Database.CurrentTransaction is not null)
+            return await operation(cancellationToken);
+        return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
+            async token => await operation(token), cancellationToken);
     }
 }

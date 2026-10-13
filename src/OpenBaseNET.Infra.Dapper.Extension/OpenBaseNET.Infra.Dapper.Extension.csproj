@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.79" />
+    <PackageReference Include="Dapper" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenBaseNET.Infra.Resilience.Database.Pgsql\OpenBaseNET.Infra.Resilience.Database.Pgsql.csproj" />

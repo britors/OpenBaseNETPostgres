@@ -1,29 +1,17 @@
-﻿using System.Data;
+using System.Data;
 using System.Data.Common;
 
 namespace OpenBaseNET.Infra.Data.Context;
 
-public sealed class DbSession : IDisposable
+// The DI scope owns the connection. Creating a session does not open it.
+public sealed class DbSession(DbConnection connection)
 {
-    public DbSession(DbConnection connection)
-    {
-        Connection = connection;
-        Connection.Open();
-    }
-
-    public DbConnection? Connection { get; init; }
+    public DbConnection Connection { get; } = connection;
     public DbTransaction? Transaction { get; set; }
 
-    public void Dispose()
+    public async Task OpenAsync(CancellationToken cancellationToken = default)
     {
-        Dispose(true);
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (!disposing) return;
-        Transaction?.Dispose();
-        if (Connection?.State != ConnectionState.Closed) Connection?.Close();
-        Connection?.Dispose();
+        if (Connection.State != ConnectionState.Open)
+            await Connection.OpenAsync(cancellationToken);
     }
 }

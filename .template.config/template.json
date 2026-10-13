@@ -9,7 +9,14 @@
   "identity": "OpenBaseNET.PostgreSQL.Template",
   "name": "OpenBaseNET PostgreSQL Template",
   "shortName": "openbasenet-pgsql",
-  "sourceName": "OpenBaseNETPostgres",
+  "sourceName": "OpenBaseNET",
+  "sources": [
+    {
+      "rename": {
+        "OpenBasePgsql.sln": "OpenBaseNET.sln"
+      }
+    }
+  ],
   "tags": {
     "language": "C#",
     "type": "project"

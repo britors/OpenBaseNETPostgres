@@ -1,18 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using OpenBaseNET.Infra.Settings.ConnectionStrings;
 
 namespace OpenBaseNET.Infra.Data.Context;
 
-public class OneBaseDataBaseContext(IConfiguration configuration) : DbContext
+public class OneBaseDataBaseContext(DbSession session) : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var cn = (configuration.GetConnectionString(OneBaseConnectionStrings.OpenBasePostgres));
-
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseNpgsql(cn);
+            optionsBuilder.UseNpgsql(session.Connection);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

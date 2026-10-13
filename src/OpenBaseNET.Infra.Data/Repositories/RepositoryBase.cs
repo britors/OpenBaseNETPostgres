@@ -1,4 +1,4 @@
-﻿using OpenBaseNET.Domain.Interfaces.Repositories;
+using OpenBaseNET.Domain.Interfaces.Repositories;
 using OpenBaseNET.Infra.Dapper.Extension;
 using OpenBaseNET.Infra.Data.Context;
 using OpenBaseNET.Infra.EF.Extension;
@@ -27,6 +27,7 @@ public abstract class RepositoryBase<TEntity>
             Expression<Func<TEntity, bool>>? predicate = null,
             int? pageNumber = null,
             int? pageSize = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             params Expression<Func<TEntity, object>>[] includes)
     {
 
@@ -36,6 +37,7 @@ public abstract class RepositoryBase<TEntity>
             predicate,
             pageNumber,
             pageSize,
+            orderBy,
             includes);
 
 

@@ -1,4 +1,4 @@
-﻿using OpenBaseNET.Infra.Resilience.Http.Pipelines;
+using OpenBaseNET.Infra.Resilience.Http.Pipelines;
 
 namespace OpenBaseNET.Infra.Resilience.Http.Extensions;
 
@@ -8,9 +8,14 @@ public static class HttpClientResilienceExtension
         this HttpClient httpClient,
         string requestUri,
         HttpContent content,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool allowRetry = false)
     {
-        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync<HttpResponseMessage>(
+        // Opt in only when the server supports an idempotency key for this operation.
+        if (!allowRetry)
+            return await httpClient.PostAsync(requestUri, content, cancellationToken);
+        await content.LoadIntoBufferAsync(cancellationToken);
+        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync(
             async token => await httpClient.PostAsync(requestUri, content, token),
             cancellationToken);
     }
@@ -20,7 +25,7 @@ public static class HttpClientResilienceExtension
         string requestUri,
         CancellationToken cancellationToken)
     {
-        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync<HttpResponseMessage>(
+        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync(
             async token => await httpClient.GetAsync(requestUri, token),
             cancellationToken);
     }
@@ -31,7 +36,8 @@ public static class HttpClientResilienceExtension
         HttpContent content,
         CancellationToken cancellationToken)
     {
-        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync<HttpResponseMessage>(
+        await content.LoadIntoBufferAsync(cancellationToken);
+        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync(
             async token => await httpClient.PutAsync(requestUri, content, token),
             cancellationToken);
     }
@@ -41,7 +47,7 @@ public static class HttpClientResilienceExtension
         string requestUri,
         CancellationToken cancellationToken)
     {
-        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync<HttpResponseMessage>(
+        return await HttpClientePipeline.AsyncRetryPipeline.ExecuteAsync(
             async token => await httpClient.DeleteAsync(requestUri, token),
             cancellationToken);
     }

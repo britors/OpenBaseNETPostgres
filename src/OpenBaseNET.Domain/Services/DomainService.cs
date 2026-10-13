@@ -1,4 +1,4 @@
-﻿using OpenBaseNET.Domain.Interfaces.Repositories;
+using OpenBaseNET.Domain.Interfaces.Repositories;
 using OpenBaseNET.Domain.Interfaces.Services;
 using System.Linq.Expressions;
 
@@ -29,9 +29,10 @@ public abstract class DomainService<TEntity, TKeyType>
             Expression<Func<TEntity, bool>>? predicate = null,
             int? pageNumber = null,
             int? pageSize = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             params Expression<Func<TEntity, object>>[] includes)
     {
-        return await repository.FindAsync(cancellationToken, noTracking: true, predicate, pageNumber, pageSize, includes);
+        return await repository.FindAsync(cancellationToken, noTracking: true, predicate, pageNumber, pageSize, orderBy, includes);
     }
 
     public async Task<TEntity?> GetByIdAsync(TKeyType id, CancellationToken cancellationToken)

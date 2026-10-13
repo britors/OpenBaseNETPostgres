@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using OpenBaseNET.Infra.Resilience.Database.Pgsql.Pipelines;
 using System.Data;
 
@@ -20,12 +20,14 @@ public static class DapperExtension
         if (string.IsNullOrWhiteSpace(sql))
             throw new ArgumentException($"'{nameof(sql)}' cannot be null or empty.", nameof(sql));
 
+        // An aborted transaction must be retried as a whole by its owner.
+        if (transaction is not null)
+            return await connection.ExecuteAsync(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: cancellationToken));
+
         return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
-            async _ => await connection.ExecuteAsync(sql,
-                parameters,
-                transaction,
-                commandTimeout,
-                commandType),
+            async token => await connection.ExecuteAsync(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: token)),
             cancellationToken);
     }
 
@@ -43,12 +45,14 @@ public static class DapperExtension
         if (string.IsNullOrWhiteSpace(sql))
             throw new ArgumentException($"'{nameof(sql)}' cannot be null or empty.", nameof(sql));
 
+        // An aborted transaction must be retried as a whole by its owner.
+        if (transaction is not null)
+            return await connection.QueryAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: cancellationToken));
+
         return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
-            async _ => await connection.QueryAsync<T>(sql,
-                parameters,
-                transaction,
-                commandTimeout,
-                commandType),
+            async token => await connection.QueryAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: token)),
             cancellationToken);
     }
 
@@ -66,12 +70,14 @@ public static class DapperExtension
         if (string.IsNullOrWhiteSpace(sql))
             throw new ArgumentException($"'{nameof(sql)}' cannot be null or empty.", nameof(sql));
 
+        // An aborted transaction must be retried as a whole by its owner.
+        if (transaction is not null)
+            return await connection.QueryFirstOrDefaultAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: cancellationToken));
+
         return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
-            async _ => await connection.QueryFirstOrDefaultAsync<T>(sql,
-                parameters,
-                transaction,
-                commandTimeout,
-                commandType),
+            async token => await connection.QueryFirstOrDefaultAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: token)),
             cancellationToken);
     }
 
@@ -89,12 +95,14 @@ public static class DapperExtension
         if (string.IsNullOrWhiteSpace(sql))
             throw new ArgumentException($"'{nameof(sql)}' cannot be null or empty.", nameof(sql));
 
+        // An aborted transaction must be retried as a whole by its owner.
+        if (transaction is not null)
+            return await connection.QuerySingleOrDefaultAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: cancellationToken));
+
         return await DatabasePipeline.AsyncRetryPipeline.ExecuteAsync(
-            async _ => await connection.QuerySingleOrDefaultAsync<T>(sql,
-                parameters,
-                transaction,
-                commandTimeout,
-                commandType),
+            async token => await connection.QuerySingleOrDefaultAsync<T>(new CommandDefinition(sql, parameters,
+                transaction, commandTimeout, commandType, cancellationToken: token)),
             cancellationToken);
     }
 }

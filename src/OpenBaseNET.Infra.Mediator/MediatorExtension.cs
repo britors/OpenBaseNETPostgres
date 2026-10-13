@@ -25,21 +25,11 @@ public static class MediatorExtension
 {
     public static void AddMediatorApi(this IServiceCollection services, IConfiguration configuration,  Assembly assembly)
     {
-        var requests = assembly.GetTypes()
-            .Where(type =>
-            {
-                return type.GetInterfaces().ToList().Exists(interfaceType =>
-                    interfaceType.IsGenericType &&
-                    interfaceType.GetGenericTypeDefinition() == typeof(IRequest<>));
-            })
-            .ToList();
-
-        foreach (var request in requests)
-            services.AddMediatR(cfg =>
-            {
-                cfg.LicenseKey = configuration.GetSection("Mediator:LicenseKey").Value ?? string.Empty;
-                cfg.RegisterServicesFromAssembly(request.Assembly);
-            });
+        services.AddMediatR(cfg =>
+        {
+            cfg.LicenseKey = configuration["Mediator:LicenseKey"] ?? string.Empty;
+            cfg.RegisterServicesFromAssembly(assembly);
+        });
 
         services.AddValidatorsFromAssembly(assembly);
     }

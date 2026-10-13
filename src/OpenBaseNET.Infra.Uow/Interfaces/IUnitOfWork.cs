@@ -1,10 +1,10 @@
-﻿namespace OpenBaseNET.Infra.Uow.Interfaces;
+namespace OpenBaseNET.Infra.Uow.Interfaces;
 
 public interface IUnitOfWork
 {
-    Task BeginTransactionAsync();
+    Task BeginTransactionAsync(CancellationToken cancellationToken = default);
 
-    Task CommitAsync();
+    Task CommitAsync(CancellationToken cancellationToken = default);
 
-    Task RollbackAsync();
+    Task RollbackAsync(CancellationToken cancellationToken = default);
 }

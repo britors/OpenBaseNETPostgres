@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace OpenBaseNET.Domain.Interfaces.Repositories;
 
@@ -15,6 +15,7 @@ public interface IRepositoryBase<TEntity> where TEntity : class
             Expression<Func<TEntity, bool>>? predicate = null,
             int? pageNumber = null,
             int? pageSize = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
     Task<int> CountAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>>? predicate = null);

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Name: DynamicEqualityComparer
  * Author: Rodrigo Brito <rodrigo@w3ti.com.br>
  * Type: class
@@ -22,6 +22,7 @@ public sealed class DynamicEqualityComparer<T> : IEqualityComparer<T>
 {
     public bool Equals(T? x, T? y)
     {
+        if (ReferenceEquals(x, y)) return true;
         if (x is null || y is null)
             return false;
 
@@ -34,10 +35,7 @@ public sealed class DynamicEqualityComparer<T> : IEqualityComparer<T>
             var xValue = property.GetValue(x);
             var yValue = property.GetValue(y);
 
-            if (xValue is null || yValue is null)
-                return false;
-
-            if (!xValue.Equals(yValue))
+            if (!object.Equals(xValue, yValue))
                 return false;
         }
 
